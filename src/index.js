@@ -1,4 +1,3 @@
-import { obtenerChiste } from './js/http-provider.js'
+import { init } from './js/chistes-page.js';
 
-obtenerChiste().then(console.log);
-
+init();
