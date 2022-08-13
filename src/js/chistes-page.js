@@ -1,9 +1,11 @@
+//IMPORTACIONES
 import {obtenerChiste } from './http-provider.js'
 
+//REFERENCIAS DE HTML
 const body = document.body; // Creamos una variable que hace referencia al body de la oagina de html
 let btnOtro, olList;
 
-// Creando uns función para crear un elemento div dentro de nuestro html
+// Creando una función para crear un elemento div dentro de nuestro html
 const crearChistesHtml = () => {
 
 // Creamos esta constante, que es lo que queremos crear en el html al momento de llamar a la funcion, pero lo definimos como un string.
@@ -26,28 +28,32 @@ const crearChistesHtml = () => {
 
 }
 
+// En esta funcion vamos a declarar los eventos
 const eventos = ()  => {
    
-    olList = document.querySelector('ol');
-    btnOtro = document.querySelector('button');
+    olList = document.querySelector('ol');//Hace referenci al primer elemento 'ol' que encuentre en el html
+    btnOtro = document.querySelector('button');// hace referencia al primer elemento 'button' qu encuentre en el html
 
+//El evento del boton recibe una async function
     btnOtro.addEventListener('click', async () => {
         
-        btnOtro.disabled = true;
-        dibujarChiste( await obtenerChiste() );
-        btnOtro,disabled = false;
+        btnOtro.disabled = true;//El boton esta desabilitado 
+        dibujarChiste( await obtenerChiste() ); // Manda llamar a la funcion dibujarChiste, la cual espera a que la promesa obtenerChiste sea completada. Con esto trabajamos con el chiste que nos restorna el argumento callback
+        btnOtro,disabled = false;// El boton se habilita
 
     });
 
 }
 
+//Funcion para agregar un elemento a la lista ''ol
 const dibujarChiste = ( chiste ) => {
 
-    const olItem = document.createElement('li');
-    olItem.innerHTML = `<b>${ chiste.id } </b>: ${ chiste.value }`;
-    olItem.classList.add("list-group-item");
+    const olItem = document.createElement('li');// Creamos una nueva etiqueta 'li'
+    olItem.innerHTML = `<b>${ chiste.id } </b>: ${ chiste.value }`;// Agregamos un poco de html a nuestra lista, con esto estamos añadiendo las propiedades que necesitamos del argumento que se utiliza en la funcion. En este caso chiste
+    olItem.classList.add("list-group-item");// Se agrega una clase al item
 
-    olList.append(olItem);
+    olList.append(olItem);// Se agrega el nuevo item a la lista
+
 }
 
 
