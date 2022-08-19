@@ -3,7 +3,7 @@ import {obtenerChiste } from './http-provider.js'
 
 //REFERENCIAS DE HTML
 const body = document.body; // Creamos una variable que hace referencia al body de la oagina de html
-let btnOtro, olList;
+let btnOtro, olList, contadorChistes=0 ;
 
 // Creando una función para crear un elemento div dentro de nuestro html
 const crearChistesHtml = () => {
@@ -35,11 +35,11 @@ const eventos = ()  => {
     btnOtro = document.querySelector('button');// hace referencia al primer elemento 'button' qu encuentre en el html
 
 //El evento del boton recibe una async function
-    btnOtro.addEventListener('click', async () => {
+    btnOtro.addEventListener('click', async() => {
         
         btnOtro.disabled = true;//El boton esta desabilitado 
         dibujarChiste( await obtenerChiste() ); // Manda llamar a la funcion dibujarChiste, la cual espera a que la promesa obtenerChiste sea completada. Con esto trabajamos con el chiste que nos restorna el argumento callback
-        btnOtro,disabled = false;// El boton se habilita
+        btnOtro.disabled = false;// El boton se habilita
 
     });
 
@@ -48,8 +48,9 @@ const eventos = ()  => {
 //Funcion para agregar un elemento a la lista ''ol
 const dibujarChiste = ( chiste ) => {
 
+    contadorChistes ++;
     const olItem = document.createElement('li');// Creamos una nueva etiqueta 'li'
-    olItem.innerHTML = `<b>${ chiste.id } </b>: ${ chiste.value }`;// Agregamos un poco de html a nuestra lista, con esto estamos añadiendo las propiedades que necesitamos del argumento que se utiliza en la funcion. En este caso chiste
+    olItem.innerHTML = `${contadorChistes}.-<b>${ chiste.id } </b>: ${ chiste.value }`;// Agregamos un poco de html a nuestra lista, con esto estamos añadiendo las propiedades que necesitamos del argumento que se utiliza en la funcion. En este caso chiste
     olItem.classList.add("list-group-item");// Se agrega una clase al item
 
     olList.append(olItem);// Se agrega el nuevo item a la lista
@@ -60,4 +61,5 @@ const dibujarChiste = ( chiste ) => {
 //Creamos una función que vamos a exportar, con la cual vamos a hacer el llamado a nuestra funcion de crear un chiste en html ( crearChristesHtml )
 export const init = () => {
     crearChistesHtml();
+    eventos();
 }
